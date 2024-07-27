@@ -27,7 +27,11 @@ else
   export STARSHIP_CONFIG="$DOTFILES/misc/starship.toml"
 fi
 
-export ENABLE_ITERM2_SHELL_INTEGRATION=1
+if [[ "$OS" == "macos" ]]; then
+  export ENABLE_ITERM2_SHELL_INTEGRATION=1
+else
+  export ENABLE_ITERM2_SHELL_INTEGRATION=0
+fi
 
 source $DOTFILES/path.zsh
 source $DOTFILES/shortcuts/aliases.zsh
@@ -179,11 +183,29 @@ znap eval zoxide 'zoxide init zsh'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-if [[ "$OS" == "linux" ]]; then
-  if [[ "$MACHINE_NAME" != "pop-os" ]]; then
-    source "$DOTFILES/shortcuts/conda.zsh"
-  fi
+# if [[ "$OS" == "linux" ]]; then
+#   if [[ "$MACHINE_NAME" != "pop-os" ]]; then
+#     source "$DOTFILES/shortcuts/conda.zsh"
+#   fi
+# fi
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/mprabhud/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/mprabhud/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/mprabhud/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/mprabhud/miniconda3/bin:$PATH"
+    fi
 fi
+unset __conda_setup
+# <<< conda initialize <<<
+# "
+#MYCOMMENT
+
 
 if [[ -v MATRIX_NODE ]]; then
   source "$DOTFILES/shortcuts/completions.zsh"
@@ -197,4 +219,44 @@ fi
 if [[ "$PROFILE_ZSHRC" -eq 1 ]]; then
   zprof
 fi
+
+# Get the hostname and username
+HOSTNAME=$(hostname -s)
+USERNAME=$(whoami)
+
+# Update the precmd function to include hostname and username
+precmd() {
+  CURRENT_DIR=${PWD##*/}
+  if [[ $PWD == $HOME ]]; then
+    CURRENT_DIR="~"
+  elif [[ $PWD == "/" ]]; then
+    CURRENT_DIR="/"
+  else
+    CURRENT_DIR=$(echo $PWD | awk -F/ '{if (NF>2) print $(NF-1)"/"$NF; else print $NF}')
+  fi
+}
+
+# Determines prompt modifier if and when a conda environment is active
+precmd_conda_info() {
+  if [[ -n $CONDA_DEFAULT_ENV ]]; then
+    CONDA_ENV="($CONDA_DEFAULT_ENV) "
+  # When no conda environment is active, don't show anything
+  else
+    CONDA_ENV="(base) "
+  fi
+}
+
+# Run the previously defined function before each prompt
+precmd_functions+=( precmd_conda_info )
+
+
+
+setopt PROMPT_SUBST
+# Update the PROMPT to include hostname and username
+PROMPT='%F{cyan}$CONDA_ENV%f%F{yellow}${USERNAME}@%F{172}${HOSTNAME}%f:%F{green}${CURRENT_DIR}%f$ '
+
+# https://www.calmar.ws/vim/256-xterm-24bit-rgb-color-chart.html
+
+# PROMPT='%F{green}${CURRENT_DIR}%f$ '
+
 

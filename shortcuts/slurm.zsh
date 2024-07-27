@@ -16,7 +16,7 @@ alias watchx60='watch -n60 -x '
 if [[ -v GROGU_NODE ]]; then
   export gpu_env='/home/mprabhud/micromamba/envs/sedd/bin/gpustat --watch'
 else
-  export gpu_env='~/anaconda3/envs/sedd/bin/gpustat --watch'
+  export gpu_env='~/miniconda3/bin/gpustat --watch'
 fi
 alias wnv="$gpu_env"
 alias wnvv="$gpu_env --show-pid --show-user --show-power"
