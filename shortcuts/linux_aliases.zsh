@@ -2,7 +2,12 @@
 alias doctor='sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoclean && sudo apt-get clean && sudo apt-get autoremove -y'
 alias code-ssh="$DOTFILES/scripts/code_connect.py"
 
-alias enableconda='export PATH="/home/mprabhud/miniconda3/bin:$PATH" && source ~/miniconda3/etc/profile.d/conda.sh'
+if [[ -v MATRIX_NODE ]]; then
+  alias enableconda='export PATH="/home/mprabhud/miniconda3/bin:$PATH" && source ~/miniconda3/etc/profile.d/conda.sh'
+fi
+elif [[ -v GROGU_NODE ]]; then
+  alias enableconda='export PATH="/grogu/user/mprabhud/miniconda3/bin:$PATH" && source ~/miniconda3/etc/profile.d/conda.sh'
+fi
 alias dl="$HOME/.iterm2/it2dl"
 alias psi='ps -u -p'
 

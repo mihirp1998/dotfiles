@@ -101,8 +101,9 @@ if [[ -v MATRIX_NODE || -v GROGU_NODE ]]; then
 
     if [[ -v MATRIX_NODE ]]; then
       export PATH="/home/mprabhud/miniconda3/bin:$PATH"
+    elif [[ -v GROGU_NODE ]]; then
+      export PATH="/grogu/user/mprabhud/miniconda3/envs/alignprop/bin:$PATH"
     fi
-fi
 
 # To install copilot: npm install -g @githubnext/github-copilot-cli; github-copilot-cli auth
 # Warning, this adds 200ms to shell startup
@@ -191,17 +192,34 @@ znap eval zoxide 'zoxide init zsh'
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/mprabhud/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/home/mprabhud/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/mprabhud/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/home/mprabhud/miniconda3/bin:$PATH"
-    fi
+
+if [[ -v MATRIX_NODE ]]; then
+  __conda_setup="$('/home/mprabhud/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+  if [ $? -eq 0 ]; then
+      eval "$__conda_setup"
+  else
+      if [ -f "/home/mprabhud/miniconda3/etc/profile.d/conda.sh" ]; then
+          . "/home/mprabhud/miniconda3/etc/profile.d/conda.sh"
+      else
+          export PATH="/home/mprabhud/miniconda3/bin:$PATH"
+      fi
+  fi
+  unset __conda_setup
 fi
-unset __conda_setup
+elif [[ -v GROGU_NODE ]]; then
+  __conda_setup="$('/grogu/user/mprabhud/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+  if [ $? -eq 0 ]; then
+      eval "$__conda_setup"
+  else
+      if [ -f "/grogu/user/mprabhud/miniconda3/etc/profile.d/conda.sh" ]; then
+          . "/grogu/user/mprabhud/miniconda3/etc/profile.d/conda.sh"
+      else
+          export PATH="/grogu/user/mprabhud/miniconda3/bin:$PATH"
+      fi
+  fi
+  unset __conda_setup
+fi
+
 # <<< conda initialize <<<
 # "
 #MYCOMMENT
