@@ -245,7 +245,7 @@ precmd_conda_info() {
     CONDA_ENV="(base) "
   fi
 }
-
+export TERM=xterm-256color
 # Run the previously defined function before each prompt
 precmd_functions+=( precmd_conda_info )
 
