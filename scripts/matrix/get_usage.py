@@ -36,7 +36,7 @@ def main(partition: str):
     def run_ssh_command(node):
         if 'LC_MONETARY' in os.environ:
             del os.environ['LC_MONETARY']
-        ssh_command = f"ssh -o StrictHostKeyChecking=no -f {node} '/bin/sh /home/mprabhud/aswerdlo/dotfiles/scripts/matrix/get_usage.sh' --norc --noprofile"
+        ssh_command = f"ssh -o StrictHostKeyChecking=no -f {node} '/bin/sh /home/mprabhud/dotfiles/scripts/matrix/get_usage.sh' --norc --noprofile"
         result = subprocess.run(ssh_command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         if result.returncode == 0:
             return f"Succeeded on {node}"

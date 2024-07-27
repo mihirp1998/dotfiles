@@ -39,7 +39,7 @@ def main(
     dotfiles_dir = os.environ.get("DOTFILES")
     extra_tmux_args = []
     if cluster_name == "grogu":
-        extra_tmux_args = ["-L", "aswerdlo", "-f", f"{dotfiles_dir}/.tmux.conf"]
+        extra_tmux_args = ["-L", "mprabhud", "-f", f"{dotfiles_dir}/.tmux.conf"]
     if node is None:
         session_name = f"{random.randint(1000, 9999)}"
         node = ''
@@ -127,7 +127,7 @@ def main(
 
     comment = ''
     if cluster_name == 'grogu':
-        comment = "--comment='aswerdlo' "
+        comment = "--comment='mprabhud' "
 
     extra_sbatch_args = ""
     if ctx.args:

@@ -16,11 +16,8 @@ export MACHINE_NAME=$(hostname | sed 's/\.eth$//')
 [[ "$(hostname)" =~ ^grogu-[0-9]-[0-9][0-9] ]] && GROGU_COMPUTE_NODE=1
 [[ "$(hostname)" == "grogu.ml.cmu.edu" ]] && export GROGU_HEAD_NODE=1
 
-if [[ -n $GROGU_NODE ]]; then
-  export HOMEDIR="$HOME/aswerdlo"
-else
-  export HOMEDIR="$HOME"
-fi
+# if [[ -n $GROGU_NODE ]]; then
+export HOMEDIR="$HOME"
 
 . "$HOMEDIR/dotfiles/constants.sh"
 
@@ -99,7 +96,7 @@ if [[ -v MATRIX_NODE || -v GROGU_NODE ]]; then
     alias xserver="Xorg -noreset +extension GLX +extension RANDR +extension RENDER &"
 
     if [[ -v MATRIX_NODE ]]; then
-      export PATH="/home/aswerdlo/anaconda3/bin:$PATH"
+      export PATH="/home/mprabhud/miniconda3/bin:$PATH"
     fi
 fi
 

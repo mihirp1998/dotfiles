@@ -1,4 +1,4 @@
-#!/home/aswerdlo/dotfiles/venv/bin/python
+#!/home/mprabhud/dotfiles/venv/bin/python
 
 import os
 import shutil

@@ -115,7 +115,7 @@ function tg() {
     server="grogu.ri.cmu.edu"
   fi
 
-  LC_MESSAGES="TMUX" ssh -t $server 'LD_LIBRARY_PATH=$HOME/local/lib $HOME/local/bin/tmux -L aswerdlo -f "/home/mprabhud/aswerdlo/dotfiles/.tmux.conf" -CC new -A -s main'
+  LC_MESSAGES="TMUX" ssh -t $server 'LD_LIBRARY_PATH=$HOME/local/lib $HOME/local/bin/tmux -L mprabhud -f "/home/mprabhud/dotfiles/.tmux.conf" -CC new -A -s main'
 }
 
 function tt() {

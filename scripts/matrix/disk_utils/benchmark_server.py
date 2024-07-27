@@ -1,4 +1,4 @@
-#!/home/aswerdlo/dotfiles/venv/bin/python
+#!/home/mprabhud/dotfiles/venv/bin/python
 
 from pathlib import Path
 import shutil
@@ -15,7 +15,7 @@ try:
 except Exception as e:
     print(f'Failed to establish ingress with ngrok. Please port forward on port 5000 to access server')
 
-home_dir = Path('/home/aswerdlo')
+home_dir = Path('/home/mprabhud')
 log_dir = home_dir / 'tmp' / 'scratch' / 'disk_testing' / 'server'
 log_dir.mkdir(parents=True, exist_ok=True)
 script_folder = home_dir / 'dotfiles' / 'scripts' / 'matrix'

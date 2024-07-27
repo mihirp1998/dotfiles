@@ -2,7 +2,7 @@
 alias doctor='sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoclean && sudo apt-get clean && sudo apt-get autoremove -y'
 alias code-ssh="$DOTFILES/scripts/code_connect.py"
 
-alias enableconda='export PATH="/home/aswerdlo/anaconda3/bin:$PATH" && source ~/anaconda3/etc/profile.d/conda.sh'
+alias enableconda='export PATH="/home/mprabhud/miniconda3/bin:$PATH" && source ~/miniconda3/etc/profile.d/conda.sh'
 alias dl="$HOME/.iterm2/it2dl"
 alias psi='ps -u -p'
 
@@ -96,7 +96,7 @@ function localcode() (
     CMD=ITERM-TRIGGER-open-with-local-vscode-remote
     SSH_IP=$(echo $SSH_CLIENT | awk '{ print $1}')
     if [[ "$SSH_IP" == "::1" ]]; then
-        LOCALCODE_MACHINE='ssh.aswerdlow.com'
+        LOCALCODE_MACHINE='ssh.mprabhud.com'
     else
         LOCALCODE_MACHINE="$(whoami)@$(hostname | sed 's/\.eth$//')"
     fi

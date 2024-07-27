@@ -1,4 +1,4 @@
-#!/home/aswerdlo/dotfiles/venv/bin/python
+#!/home/mprabhud/dotfiles/venv/bin/python
 
 import wandb
 import typer
@@ -12,7 +12,7 @@ bytes_to_mb = lambda bytes: bytes / 1024 ** 2
 @app.command(context_settings={"allow_extra_args": True, "ignore_unknown_options": True})
 def main(project: str, min_size_mb: float = 0.2):
     api = wandb.Api()
-    runs = api.runs(f"aswerdlow/{project}")
+    runs = api.runs(f"mprabhud/{project}")
     total_size = 0
     for run in runs:
         now = datetime.datetime.now()

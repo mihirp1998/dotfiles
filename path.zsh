@@ -129,8 +129,8 @@ elif [[ "$OS" == "linux" ]]; then
         export DETECTRON2_DATASETS="/projects/katefgroup/language_grounding/SEMSEG_100k"
         export OMP_NUM_THREADS=8
 
-        export HOMEBREW_RELOCATE_BUILD_PREFIX='/home/aswerdlo/perm/homebrew'
-        export HOMEBREW_CURL_PATH='/home/aswerdlo/bin/curl'
+        export HOMEBREW_RELOCATE_BUILD_PREFIX="$HOME/perm/homebrew"
+        export HOMEBREW_CURL_PATH='$HOME/bin/curl'
         export HOMEBREW_GIT_PATH='/opt/git/2.30/bin/git'
         export HOMEBREW_CURLRC=1
         

@@ -6,7 +6,7 @@ sudo apfs-fuse -o uid=1000,gid=1000,allow_other /dev/sdb2 /mnt/backup
 Description=Mount drives
 
 [Service]
-ExecStart=/home/aswerdlow/bin/mount.sh
+ExecStart=/home/mprabhud/bin/mount.sh
 
 [Install]
 WantedBy=multi-user.target
@@ -50,7 +50,7 @@ from cv2 import cuda
 cv2.getBuildInformation()
 
 
-CONTAINER_ID=datamachines/cudnn_tensorflow_opencv:11.4.2_2.6.0_4.5.4-20211029 ./runDocker.sh -d /home/aswerdlow/streetview
+CONTAINER_ID=datamachines/cudnn_tensorflow_opencv:11.4.2_2.6.0_4.5.4-20211029 ./runDocker.sh -d /home/mprabhud/streetview
 
 rclone sync -P gdrive:/data data
 
@@ -82,7 +82,7 @@ cmake -DCMAKE_BUILD_TYPE=RELEASE -DOpenMVG_USE_OCVSIFT=ON -DOpenCV_DIR="../openc
 sudo cmake --build . --target install -- -j"$(nproc)"
 
 
-export data_dir=/home/aswerdlow/Downloads/data
+export data_dir=/home/mprabhud/Downloads/data
 python3 software/SfM/SfM_SequentialPipeline.py $data_dir/images $data_dir/output
 ./Linux-x86_64-RELEASE/openMVG_main_exportMatches -i $data_dir/output/matches/sfm_data.json -d $data_dir/output/matches -m $data_dir/output/matches/matches.putative.bin -o $data_dir/output
 

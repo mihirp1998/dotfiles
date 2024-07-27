@@ -1,2 +1,2 @@
 #!/bin/sh
-nvidia-smi > $HOME/aswerdlo/tmp/2024_07_02/data/$(hostname).txt
+nvidia-smi > $HOME/tmp/2024_07_02/data/$(hostname).txt

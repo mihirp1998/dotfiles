@@ -35,10 +35,10 @@ alias cluster='$DOTFILES/scripts/matrix/lib/gpu-usage-by-node -p'
 alias cluster_all='$DOTFILES/venv/bin/slurm_gpustat --partition $PARTITION; $DOTFILES/scripts/matrix/lib/whoson -g; $DOTFILES/scripts/matrix/lib/gpu-usage-by-node -p'
 
 if [[ -v GROGU_NODE ]]; then
-  # alias kj='squeue --me --states=RUNNING --Format=jobid,comment --noheader | grep "aswerdlo" | awk '\''{print $1}'\'' | xargs scancel'
+  # alias kj='squeue --me --states=RUNNING --Format=jobid,comment --noheader | grep "mprabhud" | awk '\''{print $1}'\'' | xargs scancel'
   function kj() {
     local job_id=$1
-    local required_comment='aswerdlo'
+    local required_comment='mprabhud'
     local job_comment=$(squeue --job=$job_id --Format=jobid,comment --noheader | awk '{print $2}')
 
     if [[ "$job_comment" == *"$required_comment"* ]]; then

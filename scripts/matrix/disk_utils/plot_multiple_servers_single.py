@@ -1,4 +1,4 @@
-#!/home/aswerdlo/dotfiles/venv/bin/python
+#!/home/mprabhud/dotfiles/venv/bin/python
 
 import pandas as pd
 import matplotlib.pyplot as plt
