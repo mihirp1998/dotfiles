@@ -1,7 +1,8 @@
 #!/bin/sh
 '''exec' "$(dirname "$0")/../../venv/bin/python" "$0" "$@"
 ' '''
-
+import ipdb
+st = ipdb.set_trace
 import argparse
 import os
 import re
@@ -30,16 +31,17 @@ def main(
     constraint: Optional[str] = None,
     sbatch: bool = False,
 ):
-    
     if node is not None and "--" in node:
         ctx.args = [node] + ctx.args
         node = None
 
     cluster_name = os.environ.get('CLUSTER_NAME', '')
     dotfiles_dir = os.environ.get("DOTFILES")
-    extra_tmux_args = []
+    extra_screen_args = []
     if cluster_name == "grogu":
-        extra_tmux_args = ["-L", "mprabhud", "-f", f"{dotfiles_dir}/.tmux.conf"]
+        # Note: Screen doesn't support custom config file locations like tmux does
+        # So we'll skip the extra args for screen
+        pass
     if node is None:
         session_name = f"{random.randint(1000, 9999)}"
         node = ''
@@ -59,16 +61,23 @@ def main(
             session_name = f"{match2.group(1)}{match2.group(2)}"
         else:
             session_name = node
-
+    result = subprocess.run(['screen', '-ls'], capture_output=True, text=True)
+    existing_sessions = [line.split('\t')[1].split('.')[1].split('_')[0] for line in result.stdout.splitlines() if '\t' in line and '.' in line.split('\t')[1] and '_matrix' in line.split('\t')[1]]
+    # Convert existing session names to integers and find the biggest number
+    existing_letters = [session for session in existing_sessions if session.isalpha()]
+    biggest_letter = max(existing_letters) if existing_letters else '`'
+    # Increment the biggest number for the new session name
+    next_letter = chr(ord(biggest_letter) + 1)
+    session_name = f"{next_letter}_{session_name}"
     if sbatch is False:
         try:
-            subprocess.run(['tmux', *extra_tmux_args, 'has-session', '-t', session_name], check=True)
+            subprocess.run(['screen', '-ls', session_name], check=True, capture_output=True)
             session_name = f"{session_name}_{random.randint(100,999)}"
         except subprocess.CalledProcessError:
             pass
 
         print(f'Creating session: {session_name}')
-        subprocess.run(['tmux', *extra_tmux_args, 'new-session', '-d', '-s', session_name])
+        subprocess.run(['screen', '-dmS', session_name])
 
     if gpus == 0:
         resources = '-c4 --mem=8g'
@@ -133,7 +142,7 @@ def main(
     if ctx.args:
         print(f"Args: {ctx.args}")
         extra_sbatch_args = " ".join(ctx.args)
-        if len(extra_tmux_args) > 0:
+        if len(extra_screen_args) > 0:
             extra_sbatch_args = f" {extra_sbatch_args}"
 
     if sbatch:
@@ -141,16 +150,16 @@ def main(
         print(f'Running: {cmd}')
         subprocess.run(cmd, shell=True)
     else:
-        command = 'srun' if no_exit else 'srun_custom.sh' # srun_custom.sh auto kills the tmux when srun stops. Use srun otherwise.
-        subprocess.run(['tmux',  *extra_tmux_args, 'send-keys', '-t', session_name,
-                        f'{command} -p {partition} {comment}{time_limit}{extra_sbatch_args} {resources} ',
-                        f'--pty $SHELL{id_str}', 'C-m'])
+        command = 'srun' if no_exit else 'srun_custom.sh' # srun_custom.sh auto kills the screen when srun stops. Use srun otherwise.
+        subprocess.run(['screen', '-S', session_name, '-X', 'stuff',
+                        f'{command} -p {partition} {comment}{time_limit}{extra_sbatch_args} {resources} '
+                        f'--pty $SHELL{id_str}\n'])
     
-        if attach and 'TMUX' not in os.environ:
+        if attach and 'STY' not in os.environ:
             print(f"Attaching to session: {session_name}")
-            subprocess.run(['tmux', *extra_tmux_args, 'attach', '-t', session_name])
+            subprocess.run(['screen', '-r', session_name])
         else:
-            print(f"Session Created: {session_name}, to manually rename: tmux rename-session -t {session_name}")
+            print(f"Session Created: {session_name}, to manually rename: screen -S {session_name} -X sessionname new_name")
 
 
 if __name__ == "__main__":

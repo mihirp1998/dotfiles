@@ -56,7 +56,7 @@ alias gb="git branch"
 alias gc="git clone"
 alias gl="git log --oneline --decorate --color"
 alias amend="git add . && git commit --amend --no-edit"
-alias commit="git add -u && git commit -m "
+alias commit="git add -u && git commit -m"
 alias force="git push --force"
 alias nuke="git clean -df && git reset --hard"
 alias pull="git pull"
@@ -68,6 +68,9 @@ alias unstage="git restore --staged ."
 alias wip="commit wip"
 alias grao="git remote set-url origin git@github.com:mihirp1998/${PWD##*/}.git"
 alias gcl="git config user.name 'Mihir Prabhudesai' && git config user.email 'mihirp1998.mp@gmail.com' && git config url.'ssh://git@github.com'.insteadOf 'https://github.com'"
+
+alias sls="screen -ls"
+alias sa="screen -rd "
 
 if [[ -n $GROGU_NODE ]]; then
   alias tmux='tmux -L mprabhud -f "$DOTFILES/.tmux.conf"'

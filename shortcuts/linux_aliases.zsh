@@ -4,9 +4,8 @@ alias code-ssh="$DOTFILES/scripts/code_connect.py"
 
 if [[ -v MATRIX_NODE ]]; then
   alias enableconda='export PATH="/home/mprabhud/miniconda3/bin:$PATH" && source ~/miniconda3/etc/profile.d/conda.sh'
-fi
 elif [[ -v GROGU_NODE ]]; then
-  alias enableconda='export PATH="/grogu/user/mprabhud/miniconda3/bin:$PATH" && source ~/miniconda3/etc/profile.d/conda.sh'
+  alias enableconda='export PATH="/grogu/user/mprabhud/miniconda3/bin:$PATH" && source /grogu/user/mprabhud/miniconda3/etc/profile.d/conda.sh'
 fi
 alias dl="$HOME/.iterm2/it2dl"
 alias psi='ps -u -p'

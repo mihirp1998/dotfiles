@@ -273,6 +273,13 @@ setopt PROMPT_SUBST
 # Update the PROMPT to include hostname and username
 PROMPT='%F{cyan}$CONDA_ENV%f%F{yellow}${USERNAME}@%F{172}${HOSTNAME}%f:%F{green}${CURRENT_DIR}%f$ '
 
+
+# API keys
+
+export WANDB_API_KEY="899662853ead8246d39f962194401e222ad8517a"
+export HF_TOKEN="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"
+
+
 # https://www.calmar.ws/vim/256-xterm-24bit-rgb-color-chart.html
 
 # PROMPT='%F{green}${CURRENT_DIR}%f$ '
