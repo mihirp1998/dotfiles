@@ -69,7 +69,18 @@ alias wip="commit wip"
 alias grao="git remote set-url origin git@github.com:mihirp1998/${PWD##*/}.git"
 alias gcl="git config user.name 'Mihir Prabhudesai' && git config user.email 'mihirp1998.mp@gmail.com' && git config url.'ssh://git@github.com'.insteadOf 'https://github.com'"
 
+sq() {
+    #do things with parameters like $1 such as
+    squeue -O UserName,,Partition,JobID,cpus-per-task,tres-per-job,tres-per-node,TimeLeft,ReqNodes,NodeList,Name | grep "$1"
+}
+
+sqr() {
+    #do things with parameters like $1 such as
+    squeue -O UserName,,Partition,JobID,cpus-per-task,tres-per-job,tres-per-node,TimeLeft,ReqNodes,Name -t PENDING  | grep "$1"
+}
+
 alias sls="screen -ls"
+alias sclean="screen -ls | grep -o '[0-9]*\.' | awk '{print substr(\$1, 1, length(\$1)-1)}' | xargs -I {} screen -X -S {} quit"
 alias sa="screen -rd "
 
 if [[ -n $GROGU_NODE ]]; then

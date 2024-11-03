@@ -1,8 +1,8 @@
 #!/bin/sh
 '''exec' "$(dirname "$0")/../../venv/bin/python" "$0" "$@"
 ' '''
-import ipdb
-st = ipdb.set_trace
+import pdb
+st = pdb.set_trace
 import argparse
 import os
 import re
@@ -31,17 +31,18 @@ def main(
     constraint: Optional[str] = None,
     sbatch: bool = False,
 ):
+
     if node is not None and "--" in node:
         ctx.args = [node] + ctx.args
         node = None
-
+    
     cluster_name = os.environ.get('CLUSTER_NAME', '')
     dotfiles_dir = os.environ.get("DOTFILES")
     extra_screen_args = []
-    if cluster_name == "grogu":
-        # Note: Screen doesn't support custom config file locations like tmux does
-        # So we'll skip the extra args for screen
-        pass
+    # if cluster_name == "grogu":
+    #     # Note: Screen doesn't support custom config file locations like tmux does
+    #     # So we'll skip the extra args for screen
+    #     pass
     if node is None:
         session_name = f"{random.randint(1000, 9999)}"
         node = ''
@@ -62,7 +63,7 @@ def main(
         else:
             session_name = node
     result = subprocess.run(['screen', '-ls'], capture_output=True, text=True)
-    existing_sessions = [line.split('\t')[1].split('.')[1].split('_')[0] for line in result.stdout.splitlines() if '\t' in line and '.' in line.split('\t')[1] and '_matrix' in line.split('\t')[1]]
+    existing_sessions = [line.split('\t')[1].split('.')[1].split('_')[0] for line in result.stdout.splitlines() if '\t' in line and '.' in line.split('\t')[1] and '_grogu' in line.split('\t')[1]]
     # Convert existing session names to integers and find the biggest number
     existing_letters = [session for session in existing_sessions if session.isalpha()]
     biggest_letter = max(existing_letters) if existing_letters else '`'

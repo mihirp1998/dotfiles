@@ -23,7 +23,7 @@ alias wnvv="$gpu_env --show-pid --show-user --show-power"
 alias wnvvv='watch -n2 -x nvidia-smi'
 
 if [[ -v GROGU_NODE ]]; then
-  alias jobs='squeue -o "%.10i %3P %.18j %.2t %.10M %.2C %.3m %.5b %.11R %.5k" -u $SLURM_USER'
+  alias jobs='squeue -o "%.10i %3P %.18j %.2t %.10M %.2C %.3m %.5b %.11R %.10k" -u $SLURM_USER'
 else
   alias jobs='squeue -o "%.10i %3P %.18j %.2t %.10M %.2C %.3m %.5b %.11R" -u $SLURM_USER'
 fi
